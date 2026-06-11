@@ -1,0 +1,11 @@
+{
+  "name": "Casamento de Rúben e Catarina",
+  "description": "Portal do Casamento elegante e interativo para partilha de fotos, mensagens de voz, livro de honra digital e Quiz ao Vivo em Direto sincronizado para o dia 14 de Junho de 2026.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

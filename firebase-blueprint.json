@@ -1,0 +1,135 @@
+{
+  "entities": {
+    "Photo": {
+      "title": "Photo",
+      "description": "User uploaded wedding photos with category and likes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "author": { "type": "string" },
+        "category": { "type": "string", "enum": ["cerimonia", "festa", "amigos", "momentos"] },
+        "imageUrl": { "type": "string", "description": "Base64 encoded compressed image data" },
+        "likesCount": { "type": "integer" },
+        "likedBy": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "author", "category", "imageUrl", "likesCount", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Guest messages in digital guestbook, optionally with voice audio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "author": { "type": "string" },
+        "text": { "type": "string" },
+        "audioUrl": { "type": "string", "description": "Base64 encoded audio data if it is a voice message" },
+        "hasAudio": { "type": "boolean" },
+        "duration": { "type": "number", "description": "Duration of voice note in seconds" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "author", "text", "hasAudio", "createdAt"]
+    },
+    "MusicRequest": {
+      "title": "MusicRequest",
+      "description": "Song suggestions of guests for the wedding DJ",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "artist": { "type": "string" },
+        "requestedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "artist", "requestedBy", "createdAt"]
+    },
+    "SpecialMoment": {
+      "title": "SpecialMoment",
+      "description": "Marked special moments like Cake Cutting, First Dance, etc.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "momentName": { "type": "string" },
+        "markedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "momentName", "markedBy", "createdAt"]
+    },
+    "QuizState": {
+      "title": "QuizState",
+      "description": "The active state of the live quiz controlled by the admin",
+      "type": "object",
+      "properties": {
+        "currentQuestionId": { "type": "string" },
+        "currentQuestionIndex": { "type": "integer" },
+        "status": { "type": "string", "enum": ["idle", "running", "paused", "ended"] },
+        "timerDuration": { "type": "integer" },
+        "timerStartedAt": { "type": "string", "format": "date-time" },
+        "revealWinners": { "type": "boolean" },
+        "winners": { "type": "array" }
+      },
+      "required": ["currentQuestionIndex", "status", "timerDuration", "revealWinners"]
+    },
+    "QuizQuestion": {
+      "title": "QuizQuestion",
+      "description": "A quiz question managed by the admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "question": { "type": "string" },
+        "optionA": { "type": "string" },
+        "optionB": { "type": "string" },
+        "optionC": { "type": "string" },
+        "correctOption": { "type": "string", "enum": ["A", "B", "C"] },
+        "order": { "type": "integer" }
+      },
+      "required": ["id", "question", "optionA", "optionB", "optionC", "correctOption", "order"]
+    },
+    "QuizAnswer": {
+      "title": "QuizAnswer",
+      "description": "Represents an answer submitted by a specific table for a question",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tableNumber": { "type": "integer" },
+        "questionId": { "type": "string" },
+        "answer": { "type": "string", "enum": ["A", "B", "C"] },
+        "isCorrect": { "type": "boolean" },
+        "submittedAt": { "type": "string", "format": "date-time" },
+        "timeTakenSecs": { "type": "number" },
+        "points": { "type": "number" }
+      },
+      "required": ["id", "tableNumber", "questionId", "answer", "isCorrect", "submittedAt", "points"]
+    }
+  },
+  "firestore": {
+    "/photos/{photoId}": {
+      "schema": "Photo",
+      "description": "Wedding photos uploaded by guests"
+    },
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Guest messages and audio messages"
+    },
+    "/music_requests/{requestId}": {
+      "schema": "MusicRequest",
+      "description": "Song suggestions requested by guests"
+    },
+    "/special_moments/{momentId}": {
+      "schema": "SpecialMoment",
+      "description": "Special wedding moments flagged by guests"
+    },
+    "/quiz_state/{stateId}": {
+      "schema": "QuizState",
+      "description": "State coordinates of the live quiz"
+    },
+    "/quiz_questions/{questionId}": {
+      "schema": "QuizQuestion",
+      "description": "Created and managed quiz questions"
+    },
+    "/quiz_answers/{answerId}": {
+      "schema": "QuizAnswer",
+      "description": "Answers submitted by wedding tables"
+    }
+  }
+}

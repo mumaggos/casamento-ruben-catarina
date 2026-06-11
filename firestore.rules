@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Photos Collection
+    match /photos/{photoId} {
+      allow read, write: if true;
+    }
+
+    // 2. Messages / Guestbook Collection
+    match /messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // 3. Music Requests Collection
+    match /music_requests/{requestId} {
+      allow read, write: if true;
+    }
+
+    // 4. Special Moments Collection
+    match /special_moments/{momentId} {
+      allow read, write: if true;
+    }
+
+    // 5. Quiz State Collection
+    match /quiz_state/{stateId} {
+      allow read, write: if true;
+    }
+
+    // 6. Quiz Questions Collection
+    match /quiz_questions/{questionId} {
+      allow read, write: if true;
+    }
+
+    // 7. Quiz Answers Collection
+    match /quiz_answers/{answerId} {
+      allow read, write: if true;
+    }
+
+    // 8. Quiz Active Sessions Collection
+    match /quiz_active_sessions/{sessionId} {
+      allow read, write: if true;
+    }
+
+    // 9. Global safety catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
